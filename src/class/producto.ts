@@ -14,7 +14,7 @@ export default class Producto {
     nombre: string,
     descripcion: string,
     precio: number,
-    codigo: string,
+    codigo: number,
     url: string,
     stock: number
   ) {

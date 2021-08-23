@@ -22,12 +22,16 @@ function checkMessagesOld() {
 //Creando algunos Productos para pruebas
 //Comentar para verificar el error de no existen productos.
 for (let id = 1; id <= 4; id++) {
-  const objDatos = contenido();
-  const objProducto = new Producto(
-    objDatos.title,
-    parseFloat(objDatos.price),
-    objDatos.thumbnail,
-    id
+  const objDatos: Producto = contenido();
+  const objProducto: Producto = new Producto(
+    id,
+    objDatos.timestamp,
+    objDatos.nombre,
+    objDatos.descripcion,
+    objDatos.precio,
+    objDatos.codigo,
+    objDatos.url,
+    objDatos.stock
   );
   productos.push(objProducto);
   dbIDs.push(id);

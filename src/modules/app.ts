@@ -1,5 +1,6 @@
 const fs = require('fs');
 import path from 'path';
+import Producto from '../class/producto';
 const publicPathFolder = path.resolve(__dirname, './../../public/');
 const publicPathFileName = path.resolve(
   __dirname,
@@ -13,12 +14,16 @@ const random = (min: number, max: number) => {
 
 //Generando el contenido de la Item.
 const contenido = () => {
-  let obj = {
-    title: `Producto ${Math.floor(random(1, 10))}`,
-    price: `${random(0.0, 9999.99).toFixed(2)}`,
-    thumbnail: `https://picsum.photos/id/${Math.floor(random(1, 200))}/200/200`,
-    id: ``,
-  };
+  let obj: Producto = new Producto(
+    0,
+    new Date(),
+    `Producto ${Math.floor(random(1, 10))}`,
+    `Descripcion ${Math.floor(random(1, 10))}`,
+    parseFloat(random(0.0, 9999.99).toFixed(2)),
+    parseInt(random(0, 40000).toFixed(0)),
+    `https://picsum.photos/id/${Math.floor(random(1, 200))}/200/200`,
+    parseInt(random(0, 100).toFixed(0))
+  );
   return obj;
 };
 

@@ -73,10 +73,14 @@ routerProductos.post('/agregar', (req, res) => {
   lastID.lastID = lastID.lastID + 1; // Se incrementa el lastID.lastID por que se va a guarda un nuevo valor.
 
   const objProducto = new Producto(
-    body.title,
-    body.price,
-    body.thumbnail,
-    lastID.lastID
+    lastID.lastID,
+    new Date(),
+    body.nombre,
+    body.descripcion,
+    parseFloat(body.precio),
+    parseInt(body.codigo),
+    body.url,
+    parseInt(body.stock)
   );
   productos.push(objProducto);
   dbIDs.push(lastID.lastID);
@@ -138,11 +142,13 @@ routerProductos.put('/actualizar/:id', (req, res) => {
   }
 
   if (flagUpdate) {
-    productos[indexID].title = body.title;
-    productos[indexID].price = body.price;
-    productos[indexID].thumbnail = body.thumbnail;
+    productos[indexID].nombre = body.title;
+    productos[indexID].precio = body.price;
+    productos[indexID].url = body.thumbnail;
     const objProducto = productos[indexID];
-
+    /*
+     *** Recordar guardar en el archivo ***
+     */
     res.json({
       objProducto,
     });

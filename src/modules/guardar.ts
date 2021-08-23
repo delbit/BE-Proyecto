@@ -31,10 +31,14 @@ export function guardarFromForm(data: any) {
     lastID.lastID = lastID.lastID + 1; // Se incrementa el lastID por que se va a guarda un nuevo valor.
 
     const objProducto = new Producto(
-      data.title,
-      data.price,
-      data.thumbnail,
-      lastID.lastID
+      lastID.lastID,
+      new Date(),
+      data.nombre,
+      data.descripcion,
+      parseFloat(data.precio),
+      parseInt(data.codigo),
+      data.url,
+      parseInt(data.stock)
     );
     productos.push(objProducto);
     dbIDs.push(lastID.lastID);
