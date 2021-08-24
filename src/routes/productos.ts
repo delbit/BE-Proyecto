@@ -2,14 +2,14 @@ import express from 'express';
 import Producto from '../class/producto';
 import { productos, dbIDs, lastID } from '../modules/data';
 
-const routerProductos = express.Router();
+const router = express.Router();
 
 /**
  * DEFINICION RUTAS BASICAS
  */
 
 //Ruta para Listar todos los producto existentes
-routerProductos.get('/listar', (req, res) => {
+router.get('/listar', (req, res) => {
   if (productos.length < 1) {
     return res.status(400).json({
       error: 'No hay productos cargados',
@@ -22,7 +22,7 @@ routerProductos.get('/listar', (req, res) => {
 });
 
 //Ruta para listar un producto especifico por su id
-routerProductos.get('/listar/:id', (req, res) => {
+router.get('/listar/:id', (req, res) => {
   const id = parseInt(req.params.id);
 
   if (id < dbIDs[0] || id > dbIDs[dbIDs.length - 1]) {
@@ -45,7 +45,7 @@ routerProductos.get('/listar/:id', (req, res) => {
 });
 
 //Ruta para guardar un producto nuevo si se cumplen los parámetros necesarios.
-routerProductos.post('/agregar', (req, res) => {
+router.post('/agregar', (req, res) => {
   const body = req.body;
   const msgErrorParametros = 'Parámetros no validos';
   const errorGuardar = (msg: string) => {
@@ -97,7 +97,7 @@ routerProductos.post('/agregar', (req, res) => {
 });
 
 //Ruta para actualizar un producto si se cumplen los parámetros necesarios.
-routerProductos.put('/actualizar/:id', (req, res) => {
+router.put('/actualizar/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const body = req.body;
   const msgErrorID = 'Producto no encontrado';
@@ -156,7 +156,7 @@ routerProductos.put('/actualizar/:id', (req, res) => {
 });
 
 //Ruta encargada de eliminar un producto
-routerProductos.delete('/borrar/:id', (req, res) => {
+router.delete('/borrar/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const msgErrorID = 'Producto no encontrado';
   let flagDelete = true;
@@ -189,4 +189,4 @@ routerProductos.delete('/borrar/:id', (req, res) => {
   }
 });
 
-export default routerProductos;
+export default router;
