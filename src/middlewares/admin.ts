@@ -2,11 +2,14 @@ import { Request, Response, NextFunction } from 'express';
 import { admin } from './../modules/data';
 
 export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
-  console.log('EJECUTANDO MIDDLEWARE');
+  let path = req.baseUrl + req.path;
+  let method = req.method;
+
   if (admin) next();
   else {
     res.status(401).json({
-      msg: 'No estas autorizado',
+      error: -1,
+      descripción: `ruta '${path}' método '${method}' no autorizada`,
     });
   }
 };

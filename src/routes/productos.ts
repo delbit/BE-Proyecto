@@ -1,6 +1,7 @@
 import express from 'express';
 import Producto from '../class/producto';
 import { productos, dbIDs, lastID } from '../modules/data';
+import { checkAdmin } from './../middlewares/admin';
 
 const router = express.Router();
 
@@ -45,7 +46,7 @@ router.get('/listar/:id', (req, res) => {
 });
 
 //Ruta para guardar un producto nuevo si se cumplen los parámetros necesarios.
-router.post('/agregar', (req, res) => {
+router.post('/agregar', checkAdmin, (req, res) => {
   const body = req.body;
   const msgErrorParametros = 'Parámetros no validos';
   const errorGuardar = (msg: string) => {
@@ -97,7 +98,7 @@ router.post('/agregar', (req, res) => {
 });
 
 //Ruta para actualizar un producto si se cumplen los parámetros necesarios.
-router.put('/actualizar/:id', (req, res) => {
+router.put('/actualizar/:id', checkAdmin, (req, res) => {
   const id = parseInt(req.params.id);
   const body = req.body;
   const msgErrorID = 'Producto no encontrado';
@@ -156,7 +157,7 @@ router.put('/actualizar/:id', (req, res) => {
 });
 
 //Ruta encargada de eliminar un producto
-router.delete('/borrar/:id', (req, res) => {
+router.delete('/borrar/:id', checkAdmin, (req, res) => {
   const id = parseInt(req.params.id);
   const msgErrorID = 'Producto no encontrado';
   let flagDelete = true;

@@ -10,6 +10,7 @@ const productos: Producto[] = []; //Array de productos
 const dbIDs: number[] = []; //Array de los IDs de los productos
 const lastID = { lastID: 0 }; //Ultimo ID de producto utilizado
 const messages: Message[] = []; //Array de todos los mensajes del chat
+const admin = false;
 
 //Se verifica si existen mensajes guardados
 function checkMessagesOld() {
@@ -40,4 +41,4 @@ for (let id = 1; id <= 4; id++) {
 
 //Se inicializan los mensajes
 checkMessagesOld();
-export { productos, dbIDs, lastID, messages };
+export { productos, dbIDs, lastID, messages, admin };
