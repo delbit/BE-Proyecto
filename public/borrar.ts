@@ -1,17 +1,19 @@
-import express from 'express';
-import Producto from '../class/producto';
-import { productsController } from '../controllers/productos';
-import { productos, dbIDs, lastID } from '../persistencia/data';
-import { checkAdmin } from './../middlewares/admin';
-
-const router = express.Router();
-
 /**
  * DEFINICION RUTAS BASICAS
  */
 
 //Ruta para Listar todos los producto existentes
-router.get('/listar', productsController.getProducts);
+router.get('/listar', (req, res) => {
+  if (productos.length < 1) {
+    return res.status(400).json({
+      error: 'No hay productos cargados',
+    });
+  }
+
+  res.json({
+    productos,
+  });
+});
 
 //Ruta para listar un producto especifico por su id
 router.get('/listar/:id', (req, res) => {
