@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { productos } from './../modules/data';
+import { productos } from '../persistencia/data';
 
 const router = Router();
 

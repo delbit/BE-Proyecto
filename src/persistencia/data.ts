@@ -1,7 +1,7 @@
-import { leerMessages } from './app';
+import { leerMessages } from '../modules/app';
 import Producto from '../class/producto';
 import Message from '../class/message';
-import { contenido } from './app';
+import { contenido } from '../modules/app';
 
 /**
  * DATOS A MANIPULAR

@@ -1,6 +1,6 @@
 import { Server } from 'socket.io';
 import { guardarFromForm, guardarNewMessage } from '../modules/guardar';
-import { productos, messages } from '../modules/data';
+import { productos, messages } from '../persistencia/data';
 
 export const initWsServer = (server: any) => {
   const io = new Server(server);

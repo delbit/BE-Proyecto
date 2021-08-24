@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { admin } from './../modules/data';
+import { admin } from '../persistencia/data';
 
 export const checkAdmin = (req: Request, res: Response, next: NextFunction) => {
   let path = req.baseUrl + req.path;

@@ -1,7 +1,7 @@
 import Producto from '../class/producto';
 import Message from '../class/message';
 import moment from 'moment';
-import { productos, dbIDs, lastID, messages } from './data';
+import { productos, dbIDs, lastID, messages } from '../persistencia/data';
 import { guardarMessages } from './app';
 
 //Función encargada de validad y guardar el form cuando se llama desde el websocket
