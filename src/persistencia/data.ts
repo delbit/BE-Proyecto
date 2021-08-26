@@ -1,5 +1,6 @@
 import { leerMessages } from '../modules/app';
 import Producto from '../class/producto';
+import Carrito from '../class/carrito';
 import Message from '../class/message';
 import { contenido } from '../modules/app';
 
@@ -10,6 +11,7 @@ const productos: Producto[] = []; //Array de productos
 const dbIDs: number[] = []; //Array de los IDs de los productos
 const lastID = { lastID: 0 }; //Ultimo ID de producto utilizado
 const messages: Message[] = []; //Array de todos los mensajes del chat
+const carritoGlobal = new Carrito(1, new Date());
 const admin = true;
 
 //Se verifica si existen mensajes guardados

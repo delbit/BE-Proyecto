@@ -2,11 +2,11 @@ import Producto from './producto';
 export default class Carrito {
   id;
   timestamp;
-  producto: any;
+  producto: Producto[];
 
-  constructor(id: number, timestamp: Date, producto: Producto) {
+  constructor(id: number, timestamp: Date) {
     this.id = id;
     this.timestamp = timestamp;
-    this.producto.push(producto);
+    this.producto = [];
   }
 }
