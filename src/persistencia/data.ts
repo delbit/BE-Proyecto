@@ -3,6 +3,7 @@ import Producto from '../class/producto';
 import Carrito from '../class/carrito';
 import Message from '../class/message';
 import { contenido } from '../modules/app';
+import { productsPersistencia } from '../persistencia/productos';
 
 /**
  * DATOS A MANIPULAR
@@ -39,6 +40,7 @@ for (let id = 1; id <= 4; id++) {
   productos.push(objProducto);
   dbIDs.push(id);
   lastID.lastID = id;
+  productsPersistencia.guardarProductos();
 }
 
 //Se inicializan los mensajes

@@ -1,5 +1,12 @@
 import { productos, dbIDs, lastID } from './data';
 import Producto from '../class/producto';
+const fs = require('fs');
+import path from 'path';
+import { objToJSON } from './../modules/app';
+const publicPathFileProductos = path.resolve(
+  __dirname,
+  './../../public/productos.json'
+);
 
 function checkParams(data: any) {
   let checkFlag: boolean = false;
@@ -73,6 +80,8 @@ class Productos {
       productos.push(objProducto);
       dbIDs.push(lastID.lastID);
 
+      this.guardarProductos();
+
       return objProducto;
     } else {
       return dataOk;
@@ -93,7 +102,7 @@ class Productos {
         data.url,
         parseInt(data.stock)
       );
-
+      this.guardarProductos();
       return [productos[indexID]];
     } else {
       return dataOk;
@@ -104,7 +113,12 @@ class Productos {
     const producto = productos[indexID];
     productos.splice(indexID, 1);
     dbIDs.splice(indexID, 1);
+    this.guardarProductos();
     return producto;
+  }
+
+  guardarProductos() {
+    fs.writeFileSync(publicPathFileProductos, objToJSON(productos), 'utf-8');
   }
 }
 
