@@ -1,6 +1,12 @@
 import { carritoGlobal } from './data';
 import { productos, dbIDs, lastID } from './data';
-import Producto from '../class/producto';
+const fs = require('fs');
+import path from 'path';
+import { objToJSON } from './../modules/app';
+const publicPathFileCarrito = path.resolve(
+  __dirname,
+  './../../public/carrito.json'
+);
 
 class Carrito {
   //Se encarga de buscar un producto en particular y lo retorno si existe
@@ -32,12 +38,18 @@ class Carrito {
 
   post(indexID: number) {
     carritoGlobal.addProducto(productos[indexID]);
+    this.guardarCarrito();
     return carritoGlobal;
   }
 
   del(indexID: number) {
     carritoGlobal.delProducto(indexID);
+    this.guardarCarrito();
     return carritoGlobal;
+  }
+
+  guardarCarrito() {
+    fs.writeFileSync(publicPathFileCarrito, objToJSON(carritoGlobal), 'utf-8');
   }
 }
 
