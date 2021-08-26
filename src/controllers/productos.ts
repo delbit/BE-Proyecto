@@ -5,19 +5,18 @@ class Producto {
   //Para obtener los productos
   getProducts(req: Request, res: Response) {
     const id = Number(req.params.id);
-
+    console.log(id);
     if (id) {
-      const producto = productsPersistencia.find(id);
-      console.log(producto);
+      const index = productsPersistencia.find(id);
 
-      if (!producto) {
+      if (index === -1) {
         return res.status(404).json({
           msg: 'Producto no encontrado',
         });
       }
 
       return res.json({
-        data: producto,
+        data: productsPersistencia.get(index),
       });
     } else {
       const productos = productsPersistencia.get();
@@ -29,7 +28,7 @@ class Producto {
       }
 
       res.json({
-        productos,
+        data: productos,
       });
     }
   }
@@ -44,9 +43,14 @@ class Producto {
       });
     } else {
       res.json({
-        producto,
+        data: producto,
       });
     }
+  }
+
+  putProducts(req: Request, res: Response) {
+    const body = req.body;
+    const producto = productsPersistencia.put(body);
   }
 }
 
