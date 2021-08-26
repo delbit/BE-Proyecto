@@ -1,4 +1,5 @@
 import { productos, dbIDs, lastID } from './data';
+import Producto from '../class/producto';
 
 // interface addProduct {
 //   nombre: string,
@@ -10,6 +11,36 @@ import { productos, dbIDs, lastID } from './data';
 //   nombre: string,
 //   precio: number
 // }
+function checkParams(data: any) {
+  let checkFlag: boolean = false;
+
+  if (data.nombre === undefined) {
+    return checkFlag;
+  }
+
+  if (data.descripcion === undefined) {
+    return checkFlag;
+  }
+
+  if (isNaN(parseFloat(data.precio))) {
+    return checkFlag;
+  }
+
+  if (isNaN(parseInt(data.codigo))) {
+    return checkFlag;
+  }
+
+  if (data.url === undefined) {
+    return checkFlag;
+  }
+
+  if (isNaN(parseInt(data.stock))) {
+    return checkFlag;
+  }
+
+  checkFlag = true;
+  return checkFlag;
+}
 
 class Productos {
   //Se encarga de buscar un producto en particular y lo retorno si existe
@@ -29,6 +60,30 @@ class Productos {
   //Retorna la lista de productos
   get() {
     return productos;
+  }
+
+  post(data: any) {
+    let dataOk: boolean = checkParams(data);
+
+    if (dataOk) {
+      lastID.lastID = lastID.lastID + 1; // Se incrementa el lastID.lastID por que se va a guarda un nuevo valor.
+      const objProducto = new Producto(
+        lastID.lastID,
+        new Date(),
+        data.nombre,
+        data.descripcion,
+        parseFloat(data.precio),
+        parseInt(data.codigo),
+        data.url,
+        parseInt(data.stock)
+      );
+      productos.push(objProducto);
+      dbIDs.push(lastID.lastID);
+
+      return objProducto;
+    } else {
+      return dataOk;
+    }
   }
 
   // add(data: addProduct){

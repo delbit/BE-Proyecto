@@ -1,5 +1,4 @@
 import express from 'express';
-import Producto from '../class/producto';
 import { productsController } from '../controllers/productos';
 import { productos, dbIDs, lastID } from '../persistencia/data';
 import { checkAdmin } from './../middlewares/admin';
@@ -17,56 +16,7 @@ router.get('/listar', productsController.getProducts);
 router.get('/listar/:id', productsController.getProducts);
 
 //Ruta para guardar un producto nuevo si se cumplen los parámetros necesarios.
-router.post('/agregar', checkAdmin, (req, res) => {
-  const body = req.body;
-  const msgErrorParametros = 'Parámetros no validos';
-  const errorGuardar = (msg: string) => {
-    return res.status(400).json({
-      error: msg,
-    });
-  };
-
-  if (body.title === undefined) {
-    errorGuardar('title no definido');
-  }
-
-  if (body.price === undefined) {
-    errorGuardar('Precio no definido');
-  }
-
-  if (isNaN(parseFloat(body.price))) {
-    errorGuardar('Precio letra');
-  }
-
-  if (body.thumbnail === undefined) {
-    errorGuardar('No imagen');
-  }
-
-  lastID.lastID = lastID.lastID + 1; // Se incrementa el lastID.lastID por que se va a guarda un nuevo valor.
-
-  const objProducto = new Producto(
-    lastID.lastID,
-    new Date(),
-    body.nombre,
-    body.descripcion,
-    parseFloat(body.precio),
-    parseInt(body.codigo),
-    body.url,
-    parseInt(body.stock)
-  );
-  productos.push(objProducto);
-  dbIDs.push(lastID.lastID);
-
-  //Validando si el guarda es usado desde el form o via json/api
-  if (body.form === 'true') {
-    //Deprecated el form no se usa desde un submit, se reemplaza por websocket
-    res.redirect(301, '/');
-  } else {
-    res.json({
-      objProducto,
-    });
-  }
-});
+router.post('/agregar', checkAdmin, productsController.addProducts);
 
 //Ruta para actualizar un producto si se cumplen los parámetros necesarios.
 router.put('/actualizar/:id', checkAdmin, (req, res) => {

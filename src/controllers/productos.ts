@@ -10,10 +10,11 @@ class Producto {
       const producto = productsPersistencia.find(id);
       console.log(producto);
 
-      if (!producto)
+      if (!producto) {
         return res.status(404).json({
           msg: 'Producto no encontrado',
         });
+      }
 
       return res.json({
         data: producto,
@@ -29,6 +30,21 @@ class Producto {
 
       res.json({
         productos,
+      });
+    }
+  }
+
+  addProducts(req: Request, res: Response) {
+    const body = req.body;
+    const producto = productsPersistencia.post(body);
+
+    if (!producto) {
+      return res.status(400).json({
+        msg: 'Parametros no validos',
+      });
+    } else {
+      res.json({
+        producto,
       });
     }
   }
