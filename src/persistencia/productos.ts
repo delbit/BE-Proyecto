@@ -1,16 +1,6 @@
 import { productos, dbIDs, lastID } from './data';
 import Producto from '../class/producto';
 
-// interface addProduct {
-//   nombre: string,
-//   precio: number
-// }
-
-// interface Product {
-//   id: number,
-//   nombre: string,
-//   precio: number
-// }
 function checkParams(data: any) {
   let checkFlag: boolean = false;
 

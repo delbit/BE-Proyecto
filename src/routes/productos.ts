@@ -1,6 +1,5 @@
 import express from 'express';
 import { productsController } from '../controllers/productos';
-import { productos, dbIDs, lastID } from '../persistencia/data';
 import { checkAdmin } from './../middlewares/admin';
 
 const router = express.Router();

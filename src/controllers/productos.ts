@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { productsPersistencia } from '../persistencia/productos';
 
 class Producto {
