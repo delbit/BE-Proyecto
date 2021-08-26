@@ -14,27 +14,7 @@ const router = express.Router();
 router.get('/listar', productsController.getProducts);
 
 //Ruta para listar un producto especifico por su id
-router.get('/listar/:id', (req, res) => {
-  const id = parseInt(req.params.id);
-
-  if (id < dbIDs[0] || id > dbIDs[dbIDs.length - 1]) {
-    return res.status(400).json({
-      error: 'Producto no encontrado',
-    });
-  }
-
-  const indexID = dbIDs.findIndex((ID) => ID === id);
-  if (indexID === -1) {
-    return res.status(400).json({
-      error: 'Producto no encontrado',
-    });
-  }
-
-  const product = productos[indexID];
-  res.json({
-    product,
-  });
-});
+router.get('/listar/:id', productsController.getProducts);
 
 //Ruta para guardar un producto nuevo si se cumplen los parámetros necesarios.
 router.post('/agregar', checkAdmin, (req, res) => {
