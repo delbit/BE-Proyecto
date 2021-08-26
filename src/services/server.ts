@@ -1,10 +1,7 @@
 import express from 'express';
 import path from 'path';
 import * as http from 'http';
-import { handlebarsConfig } from './handlebars';
-import hbsRouter from './../routes/handelbars';
 import apiRouter from './../routes/index';
-import { initWsServer } from './websocket';
 
 //Creando el servicio de express
 export const app = express();
@@ -17,11 +14,7 @@ app.use(express.static(publicPath));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Configurando el Hanblebars luego de tener acceso al public
-handlebarsConfig(app);
-
 //Definiendo las rutas
-app.use('/', hbsRouter);
 app.use('/', apiRouter);
 
 /**
@@ -29,8 +22,5 @@ app.use('/', apiRouter);
  */
 //Creando el objeto http ára usar websocket
 const myServer = new http.Server(app);
-
-//Init SocketIo Server
-initWsServer(myServer);
 
 export default myServer;
