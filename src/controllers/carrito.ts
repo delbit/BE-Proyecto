@@ -35,7 +35,6 @@ class Carrito {
 
   addCarrito(req: Request, res: Response) {
     const id = Number(req.params.id);
-    console.log('hola');
     if (id) {
       const existe = carritoPersistencia.find(id);
       if (existe !== -1) {
@@ -54,6 +53,23 @@ class Carrito {
 
       return res.json({
         data: carritoPersistencia.post(index),
+      });
+    }
+  }
+
+  delCarrito(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    if (id) {
+      const index = carritoPersistencia.find(id);
+
+      if (index === -1) {
+        return res.status(404).json({
+          msg: 'Producto no encontrado',
+        });
+      }
+
+      return res.json({
+        data: carritoPersistencia.del(index),
       });
     }
   }

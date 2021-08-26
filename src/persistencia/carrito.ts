@@ -34,35 +34,11 @@ class Carrito {
     carritoGlobal.addProducto(productos[indexID]);
     return carritoGlobal;
   }
-  //   let dataOk: boolean = checkParams(data);
 
-  //   if (dataOk) {
-  //     lastID.lastID = lastID.lastID + 1; // Se incrementa el lastID.lastID por que se va a guarda un nuevo valor.
-  //     const objProducto = new Producto(
-  //       lastID.lastID,
-  //       new Date(),
-  //       data.nombre,
-  //       data.descripcion,
-  //       parseFloat(data.precio),
-  //       parseInt(data.codigo),
-  //       data.url,
-  //       parseInt(data.stock)
-  //     );
-  //     productos.push(objProducto);
-  //     dbIDs.push(lastID.lastID);
-
-  //     return objProducto;
-  //   } else {
-  //     return dataOk;
-  //   }
-  // }
-
-  // del(indexID: number) {
-  //   const producto = productos[indexID];
-  //   productos.splice(indexID, 1);
-  //   dbIDs.splice(indexID, 1);
-  //   return producto;
-  // }
+  del(indexID: number) {
+    carritoGlobal.delProducto(indexID);
+    return carritoGlobal;
+  }
 }
 
 export const carritoPersistencia = new Carrito();

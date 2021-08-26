@@ -13,4 +13,8 @@ export default class Carrito {
   addProducto(producto: Producto) {
     this.productos.push(producto);
   }
+
+  delProducto(indexID: number) {
+    this.productos.splice(indexID, 1);
+  }
 }

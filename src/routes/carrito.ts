@@ -17,6 +17,6 @@ routerCarrito.get('/listar/:id', carritoController.getCarrito);
 routerCarrito.post('/agregar/:id', carritoController.addCarrito);
 
 // //Ruta encargada de eliminar un producto del carrito
-// routerCarrito.delete('/borrar/:id', (req, res) => {
+routerCarrito.delete('/borrar/:id', carritoController.delCarrito);
 
 export default routerCarrito;
