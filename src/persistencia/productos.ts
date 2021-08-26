@@ -110,27 +110,12 @@ class Productos {
     }
   }
 
-  // add(data: addProduct){
-
-  //   const newItem = {
-  //     id: productos.length +1,
-  //     nombre : data.nombre,
-  //     precio : data.precio,
-  //   }
-
-  //   productos.push(newItem);
-
-  //   return newItem;
-  // }
-
-  // update(id, data){
-
-  // }
-
-  // delete(id: number) {
-  //   productos = productos.filter((aProduct) => aProduct.id !== Number(id));
-  //   return productos;
-  // }
+  del(indexID: number) {
+    const producto = productos[indexID];
+    productos.splice(indexID, 1);
+    dbIDs.splice(indexID, 1);
+    return producto;
+  }
 }
 
 export const productsPersistencia = new Productos();

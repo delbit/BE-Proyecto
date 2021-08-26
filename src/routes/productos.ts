@@ -22,37 +22,6 @@ router.post('/agregar', checkAdmin, productsController.addProducts);
 router.put('/actualizar/:id', checkAdmin, productsController.putProducts);
 
 //Ruta encargada de eliminar un producto
-router.delete('/borrar/:id', checkAdmin, (req, res) => {
-  const id = parseInt(req.params.id);
-  const msgErrorID = 'Producto no encontrado';
-  let flagDelete = true;
-
-  const errorGuardar = (msg: string) => {
-    return res.status(400).json({
-      error: msg,
-    });
-  };
-
-  if (id < dbIDs[0] || id > dbIDs[dbIDs.length - 1]) {
-    flagDelete = false;
-    errorGuardar(msgErrorID);
-  }
-
-  let indexID = dbIDs.findIndex((ID) => ID === id);
-  if (indexID === -1) {
-    flagDelete = false;
-    errorGuardar(msgErrorID);
-  }
-
-  if (flagDelete) {
-    const product = productos[indexID];
-    productos.splice(indexID, 1);
-    dbIDs.splice(indexID, 1);
-
-    res.json({
-      product,
-    });
-  }
-});
+router.delete('/borrar/:id', checkAdmin, productsController.delProducts);
 
 export default router;

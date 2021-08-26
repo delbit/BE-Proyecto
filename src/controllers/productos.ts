@@ -73,6 +73,25 @@ class Producto {
       }
     }
   }
+
+  delProducts(req: Request, res: Response) {
+    const id = Number(req.params.id);
+    if (id) {
+      const index = productsPersistencia.find(id);
+
+      if (index === -1) {
+        return res.status(404).json({
+          msg: 'Producto no encontrado',
+        });
+      }
+
+      const producto = productsPersistencia.del(index);
+
+      res.json({
+        data: producto,
+      });
+    }
+  }
 }
 
 export const productsController = new Producto();
