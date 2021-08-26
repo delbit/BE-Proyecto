@@ -46,19 +46,22 @@ class Productos {
   //Se encarga de buscar un producto en particular y lo retorno si existe
   find(id: number) {
     if (id < dbIDs[0] || id > dbIDs[dbIDs.length - 1]) {
-      return false;
+      return -1;
     }
 
     const indexID = dbIDs.findIndex((ID) => ID === id);
     if (indexID === -1) {
-      return false;
+      return indexID;
     }
 
-    return productos[id];
+    return indexID;
   }
 
   //Retorna la lista de productos
-  get() {
+  get(id: number = 0) {
+    if (id !== 0) {
+      return [productos[id]];
+    }
     return productos;
   }
 
@@ -81,6 +84,27 @@ class Productos {
       dbIDs.push(lastID.lastID);
 
       return objProducto;
+    } else {
+      return dataOk;
+    }
+  }
+
+  put(data: any, indexID: number) {
+    let dataOk: boolean = checkParams(data);
+
+    if (dataOk) {
+      productos[indexID].modificar(
+        indexID,
+        new Date(),
+        data.nombre,
+        data.descripcion,
+        parseFloat(data.precio),
+        parseInt(data.codigo),
+        data.url,
+        parseInt(data.stock)
+      );
+
+      return [productos[indexID]];
     } else {
       return dataOk;
     }

@@ -5,7 +5,6 @@ class Producto {
   //Para obtener los productos
   getProducts(req: Request, res: Response) {
     const id = Number(req.params.id);
-    console.log(id);
     if (id) {
       const index = productsPersistencia.find(id);
 
@@ -50,7 +49,29 @@ class Producto {
 
   putProducts(req: Request, res: Response) {
     const body = req.body;
-    const producto = productsPersistencia.put(body);
+    const id = Number(req.params.id);
+
+    if (id) {
+      const index = productsPersistencia.find(id);
+
+      if (index === -1) {
+        return res.status(404).json({
+          msg: 'Producto no encontrado',
+        });
+      }
+
+      const producto = productsPersistencia.put(body, index);
+
+      if (!producto) {
+        return res.status(400).json({
+          msg: 'Parametros no validos',
+        });
+      } else {
+        res.json({
+          data: producto,
+        });
+      }
+    }
   }
 }
 
