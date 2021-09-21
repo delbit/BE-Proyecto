@@ -65,9 +65,10 @@ export class ProductosMemDAO implements ProductBaseClass {
 
   async add(data: addProductI): Promise<ProductI> {
     //if (!data.nombre || !data.precio) throw new Error('invalid data');
-
+    let lastP = this.productos.length - 1;
+    let lastID = Number(this.productos[lastP]._id);
     const newItem: ProductI = {
-      _id: (this.productos.length + 1).toString(),
+      _id: (lastID + 1).toString(),
       timestamp: new Date(),
       nombre: data.nombre,
       descripcion: data.descripcion,

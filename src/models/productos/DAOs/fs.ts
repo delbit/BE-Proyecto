@@ -86,9 +86,10 @@ export class ProductosFSDAO implements ProductBaseClass {
     if (!data.nombre || !data.precio) throw new Error('invalid data');
 
     await this.leer(this.nombreArchivo);
-
+    let lastP = this.productos.length - 1;
+    let lastID = Number(this.productos[lastP]._id);
     const newItem: ProductI = {
-      _id: (this.productos.length + 1).toString(),
+      _id: (lastID + 1).toString(),
       timestamp: new Date(),
       nombre: data.nombre,
       descripcion: data.descripcion,
