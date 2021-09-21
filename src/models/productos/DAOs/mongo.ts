@@ -8,11 +8,16 @@ import {
 import Config from '../../../config';
 
 const productsSchema = new mongoose.Schema<ProductI>({
+  timestamp: Date,
   nombre: String,
+  descripcion: String,
   precio: Number,
+  codigo: String,
+  url: String,
+  stock: Number,
 });
 
-export class ProductosAtlasDAO implements ProductBaseClass {
+export class ProductosMongoDAO implements ProductBaseClass {
   private srv: string;
   private productos;
 
@@ -44,6 +49,7 @@ export class ProductosAtlasDAO implements ProductBaseClass {
   async add(data: newProductI): Promise<ProductI> {
     if (!data.nombre || !data.precio) throw new Error('invalid data');
 
+    data.timestamp = new Date();
     const newProduct = new this.productos(data);
     await newProduct.save();
 

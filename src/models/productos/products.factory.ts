@@ -1,6 +1,6 @@
 import { ProductosMemDAO } from './DAOs/memory';
 import { ProductosFSDAO } from './DAOs/fs';
-import { ProductosAtlasDAO } from './DAOs/mongo';
+import { ProductosMongoDAO } from './DAOs/mongo';
 
 import path from 'path';
 export enum TipoPersistencia {
@@ -13,6 +13,9 @@ export enum TipoPersistencia {
   Firebase = 'FIREBASE',
 }
 
+// Mongo flag para Local: true || false
+let local: boolean;
+
 export class PatternFactoryDAO {
   static get(tipo: TipoPersistencia) {
     switch (tipo) {
@@ -24,11 +27,13 @@ export class PatternFactoryDAO {
 
       case TipoPersistencia.MongoAtlas:
         console.log('RETORNANDO INSTANCIA CLASE MONGO ATLAS');
-        return new ProductosAtlasDAO();
+        local = false;
+        return new ProductosMongoDAO(local);
 
       case TipoPersistencia.LocalMongo:
         console.log('RETORNANDO INSTANCIA CLASE MONGO LOCAL');
-        return new ProductosAtlasDAO(true);
+        local = true;
+        return new ProductosMongoDAO(local);
 
       default:
         console.log('RETORNANDO INSTANCIA CLASE MEMORIA');

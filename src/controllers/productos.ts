@@ -18,7 +18,6 @@ class Producto {
   async checkProductExists(req: Request, res: Response, next: NextFunction) {
     const id = req.params.id;
     const producto = await productsAPI.getProducts(id);
-    console.log(producto);
     if (!producto.length) {
       return res.status(404).json({
         msg: 'producto not found',

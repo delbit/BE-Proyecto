@@ -1,4 +1,5 @@
 export interface newProductI {
+  timestamp?: Date;
   nombre?: string;
   descripcion?: string;
   precio?: number;
