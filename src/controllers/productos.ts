@@ -1,96 +1,90 @@
-import { Request, Response } from 'express';
-import { productsPersistencia } from '../persistencia/productos';
+import { Request, Response, NextFunction } from 'express';
+import { productsAPI } from '../class/api.productos';
+import { ProductQuery } from '../models/productos/products.interface';
 
 class Producto {
-  //Para obtener los productos
-  getProducts(req: Request, res: Response) {
-    const id = Number(req.params.id);
-    if (id) {
-      const index = productsPersistencia.find(id);
+  checkAddProducts(req: Request, res: Response, next: NextFunction) {
+    const { nombre, precio } = req.body;
 
-      if (index === -1) {
-        return res.status(404).json({
-          msg: 'Producto no encontrado',
-        });
-      }
-
-      return res.json({
-        data: productsPersistencia.get(index),
-      });
-    } else {
-      const productos = productsPersistencia.get();
-
-      if (productos.length < 1) {
-        return res.status(400).json({
-          error: 'No hay productos cargados',
-        });
-      }
-
-      res.json({
-        data: productos,
+    if (!nombre || !precio || typeof nombre !== 'string' || isNaN(precio)) {
+      return res.status(400).json({
+        msg: 'Campos del body invalidos',
       });
     }
+
+    next();
   }
 
-  addProducts(req: Request, res: Response) {
-    const body = req.body;
-    const producto = productsPersistencia.post(body);
+  async checkProductExists(req: Request, res: Response, next: NextFunction) {
+    const id = req.params.id;
+    const producto = await productsAPI.getProducts(id);
 
     if (!producto) {
-      return res.status(400).json({
-        msg: 'Parametros no validos',
-      });
-    } else {
-      res.json({
-        data: producto,
+      return res.status(404).json({
+        msg: 'producto not found',
       });
     }
+    next();
   }
 
-  putProducts(req: Request, res: Response) {
-    const body = req.body;
-    const id = Number(req.params.id);
-
+  async getProducts(req: Request, res: Response) {
+    const { id } = req.params;
+    const { nombre, precio } = req.query;
     if (id) {
-      const index = productsPersistencia.find(id);
+      const result = await productsAPI.getProducts(id);
+      // if (!result.length)
+      //   return res.status(404).json({
+      //     data: 'objeto no encontrado',
+      //   });
 
-      if (index === -1) {
-        return res.status(404).json({
-          msg: 'Producto no encontrado',
-        });
-      }
-
-      const producto = productsPersistencia.put(body, index);
-
-      if (!producto) {
-        return res.status(400).json({
-          msg: 'Parametros no validos',
-        });
-      } else {
-        res.json({
-          data: producto,
-        });
-      }
-    }
-  }
-
-  delProducts(req: Request, res: Response) {
-    const id = Number(req.params.id);
-    if (id) {
-      const index = productsPersistencia.find(id);
-
-      if (index === -1) {
-        return res.status(404).json({
-          msg: 'Producto no encontrado',
-        });
-      }
-
-      const producto = productsPersistencia.del(index);
-
-      res.json({
-        data: producto,
+      return res.json({
+        data: result,
       });
     }
+
+    const query: ProductQuery = {};
+
+    if (nombre) query.nombre = nombre.toString();
+
+    if (precio) query.precio = Number(precio);
+
+    if (Object.keys(query).length) {
+      return res.json({
+        data: await productsAPI.query(query),
+      });
+    }
+
+    res.json({
+      data: await productsAPI.getProducts(),
+    });
+  }
+
+  async addProducts(req: Request, res: Response) {
+    const newItem = await productsAPI.addProduct(req.body);
+
+    res.json({
+      msg: 'producto agregado con exito',
+      data: newItem,
+    });
+  }
+
+  async updateProducts(req: Request, res: Response) {
+    const id = req.params.id;
+
+    const updatedItem = await productsAPI.updateProduct(id, req.body);
+
+    res.json({
+      msg: 'actualizando producto',
+      data: updatedItem,
+    });
+  }
+
+  async deleteProducts(req: Request, res: Response) {
+    const id = req.params.id;
+    await productsAPI.deleteProduct(id);
+    res.json({
+      msg: 'producto borrado',
+    });
   }
 }
 
