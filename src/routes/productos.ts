@@ -23,9 +23,19 @@ router.get(
 router.post('/agregar', checkAdmin, productsController.addProducts);
 
 //Ruta para actualizar un producto si se cumplen los parámetros necesarios.
-router.put('/actualizar/:id', checkAdmin, productsController.updateProducts);
+router.put(
+  '/actualizar/:id',
+  checkAdmin,
+  productsController.checkProductExists,
+  asyncHandler(productsController.updateProducts)
+);
 
 //Ruta encargada de eliminar un producto
-router.delete('/borrar/:id', checkAdmin, productsController.deleteProducts);
+router.delete(
+  '/borrar/:id',
+  checkAdmin,
+  productsController.checkProductExists,
+  asyncHandler(productsController.deleteProducts)
+);
 
 export default router;

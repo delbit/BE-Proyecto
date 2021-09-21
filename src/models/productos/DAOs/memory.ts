@@ -1,5 +1,6 @@
 import {
   newProductI,
+  addProductI,
   ProductI,
   ProductBaseClass,
   ProductQuery,
@@ -10,9 +11,38 @@ export class ProductosMemDAO implements ProductBaseClass {
 
   constructor() {
     const mockData = [
-      { _id: '1', nombre: 'lapiz', precio: 200 },
-      { _id: '2', nombre: 'cartuchera', precio: 250 },
-      { _id: '3', nombre: 'boligoma', precio: 260 },
+      {
+        _id: '1',
+        timestamp: new Date(),
+        nombre: 'lapiz',
+        descripcion: 'punta fina',
+        precio: 200,
+        codigo: 'P899',
+        url: 'www.url',
+        stock: 15,
+      },
+
+      {
+        _id: '2',
+        timestamp: new Date(),
+        nombre: 'lapiz',
+        descripcion: 'punta fina',
+        precio: 200,
+        codigo: 'P899',
+        url: 'www.url',
+        stock: 15,
+      },
+
+      {
+        _id: '3',
+        timestamp: new Date(),
+        nombre: 'lapiz',
+        descripcion: 'punta fina',
+        precio: 200,
+        codigo: 'P899',
+        url: 'www.url',
+        stock: 15,
+      },
     ];
 
     mockData.forEach((aMock) => this.productos.push(aMock));
@@ -33,13 +63,18 @@ export class ProductosMemDAO implements ProductBaseClass {
     return this.productos;
   }
 
-  async add(data: newProductI): Promise<ProductI> {
-    if (!data.nombre || !data.precio) throw new Error('invalid data');
+  async add(data: addProductI): Promise<ProductI> {
+    //if (!data.nombre || !data.precio) throw new Error('invalid data');
 
     const newItem: ProductI = {
       _id: (this.productos.length + 1).toString(),
+      timestamp: new Date(),
       nombre: data.nombre,
+      descripcion: data.descripcion,
       precio: data.precio,
+      codigo: data.codigo,
+      url: data.url,
+      stock: data.stock,
     };
 
     this.productos.push(newItem);

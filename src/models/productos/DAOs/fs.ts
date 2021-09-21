@@ -2,6 +2,7 @@ import fs from 'fs';
 import {
   newProductI,
   ProductI,
+  addProductI,
   ProductBaseClass,
   ProductQuery,
 } from '../products.interface';
@@ -12,9 +13,38 @@ export class ProductosFSDAO implements ProductBaseClass {
 
   constructor(fileName: string) {
     const mockData = [
-      { _id: '1', nombre: 'lapiz', precio: 200 },
-      { _id: '2', nombre: 'cartuchera', precio: 250 },
-      { _id: '3', nombre: 'boligoma', precio: 260 },
+      {
+        _id: '1',
+        timestamp: new Date(),
+        nombre: 'lapiz',
+        descripcion: 'punta fina',
+        precio: 200,
+        codigo: 'P899',
+        url: 'www.url',
+        stock: 15,
+      },
+
+      {
+        _id: '2',
+        timestamp: new Date(),
+        nombre: 'lapiz',
+        descripcion: 'punta fina',
+        precio: 200,
+        codigo: 'P899',
+        url: 'www.url',
+        stock: 15,
+      },
+
+      {
+        _id: '3',
+        timestamp: new Date(),
+        nombre: 'lapiz',
+        descripcion: 'punta fina',
+        precio: 200,
+        codigo: 'P899',
+        url: 'www.url',
+        stock: 15,
+      },
     ];
     this.nombreArchivo = fileName;
     this.productos = mockData;
@@ -52,15 +82,20 @@ export class ProductosFSDAO implements ProductBaseClass {
     return this.productos;
   }
 
-  async add(data: newProductI): Promise<ProductI> {
+  async add(data: addProductI): Promise<ProductI> {
     if (!data.nombre || !data.precio) throw new Error('invalid data');
 
     await this.leer(this.nombreArchivo);
 
     const newItem: ProductI = {
       _id: (this.productos.length + 1).toString(),
+      timestamp: new Date(),
       nombre: data.nombre,
+      descripcion: data.descripcion,
       precio: data.precio,
+      codigo: data.codigo,
+      url: data.url,
+      stock: data.stock,
     };
 
     this.productos.push(newItem);

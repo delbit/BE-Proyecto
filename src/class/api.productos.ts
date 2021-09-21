@@ -1,4 +1,8 @@
-import { newProductI, ProductI } from '../models/productos/products.interface';
+import {
+  newProductI,
+  ProductI,
+  addProductI,
+} from '../models/productos/products.interface';
 import { PatternFactoryDAO } from '../models/productos/products.factory';
 import { TipoPersistencia } from '../models/productos/products.factory';
 import { ProductQuery } from '../models/productos/products.interface';
@@ -21,7 +25,7 @@ class prodAPI {
     return this.productos.get();
   }
 
-  async addProduct(productData: newProductI): Promise<ProductI> {
+  async addProduct(productData: addProductI): Promise<ProductI> {
     const newProduct = await this.productos.add(productData);
     return newProduct;
   }
